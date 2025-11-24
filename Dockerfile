@@ -15,6 +15,8 @@ RUN apk add --no-cache \
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_pgsql pgsql mbstring exif pcntl bcmath gd zip
+
+# Enable OPCache
 RUN docker-php-ext-install opcache && \
     { echo 'opcache.enable=1'; \
       echo 'opcache.memory_consumption=128'; \
@@ -33,20 +35,28 @@ RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Set working directory
 WORKDIR /var/www/html
+
+# Copy project
 COPY . .
 
-# Permissions
-RUN mkdir -p storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+# Ensure required Laravel directories exist
+RUN mkdir -p \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache && \
+    chmod -R 775 storage bootstrap/cache
 
-# Install backend deps
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Build frontend
+# Install Node dependencies and build static assets
 RUN npm ci && npm run build
 
-# Expose port
+# Expose Render default port
 EXPOSE 10000
 
 # Start Laravel server
