@@ -26,6 +26,13 @@ RUN docker-php-ext-install opcache && \
       echo 'opcache.revalidate_freq=2'; \
     } > /usr/local/etc/php/conf.d/opcache.ini
 
+RUN { echo 'upload_max_filesize=512M'; \
+      echo 'post_max_size=512M'; \
+      echo 'memory_limit=1024M'; \
+      echo 'max_execution_time=0'; \
+      echo 'max_input_time=0'; \
+    } > /usr/local/etc/php/conf.d/uploads.ini
+
 # Install Redis extension
 RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
     && pecl install redis \

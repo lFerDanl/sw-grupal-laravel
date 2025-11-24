@@ -245,7 +245,7 @@ class IntegracionIaController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|max:512000',
+            'file' => 'required|file|max:51200000',
             'titulo' => 'required|string|max:200',
             'descripcion' => 'nullable|string',
             'tipo' => 'required|in:VIDEO,AUDIO',
