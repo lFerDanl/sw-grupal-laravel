@@ -59,6 +59,6 @@ RUN npm ci && npm run build
 # Expose Render default port
 EXPOSE 10000
 
-# Start Laravel server
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
+# Start PHP built-in server with public as document root
+CMD ["php", "-S", "0.0.0.0:10000", "-t", "public", "public/index.php"]
 

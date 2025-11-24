@@ -27,6 +27,7 @@
 
     <!-- Main Theme Styles + Bootstrap -->
     <link rel="stylesheet" media="screen" href="{{asset('assets/css/theme.min.css')}}">
+    @vite(['resources/css/app.css','resources/js/app.js'])
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
