@@ -1,0 +1,16 @@
+.git
+.gitignore
+.env
+.env.example
+README.md
+*.md
+node_modules
+vendor
+storage/logs
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
+bootstrap/cache
+.vscode
+.idea
+*.log
