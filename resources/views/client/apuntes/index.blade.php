@@ -46,7 +46,7 @@
 
             <div class="mb-3">
               <div class="d-flex flex-wrap gap-2">
-                <span class="badge {{ $m['transcripcion_status']==='completado' ? 'bg-success' : ($m['transcripcion_status']==='procesando' ? 'bg-warning text-dark' : ($m['transcripcion_status']==='error' ? 'bg-danger':'bg-secondary')) }}">
+                <span id="transcripcionBadge-{{ $m['id_media'] }}" class="badge {{ $m['transcripcion_status']==='completado' ? 'bg-success' : ($m['transcripcion_status']==='procesando' ? 'bg-warning text-dark' : ($m['transcripcion_status']==='error' ? 'bg-danger':'bg-secondary')) }}">
                   @if($m['transcripcion_status']==='completado')
                     <i class="bi bi-check-circle me-1"></i>
                   @elseif($m['transcripcion_status']==='procesando')
@@ -61,7 +61,7 @@
               </div>
             </div>
 
-            <div class="mt-auto">
+            <div id="actions-{{ $m['id_media'] }}" class="mt-auto">
               @if($m['apuntes_ready'])
                 <a href="{{ route('client.apuntes.show', ['id' => $m['id_media']]) }}" class="btn btn-success w-100">
                   <i class="bi bi-eye me-2"></i>Ver apuntes
@@ -84,9 +84,9 @@
           </div>
           <h4 class="text-muted mb-3">Aún no tienes contenidos</h4>
           <p class="text-muted mb-4">¡Sube tu primera clase y comienza a generar apuntes automáticamente!</p>
-          <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalUpload">
+          <a class="btn btn-primary btn-lg" href="{{ route('client.apuntes.ia.media') }}">
             <i class="bi bi-plus-circle me-2"></i>Subir primera clase
-          </button>
+          </a>
         </div>
       </div>
     @endforelse
@@ -129,5 +129,13 @@
       } catch (e) {}
     }, 5000);
   }
+  document.addEventListener('DOMContentLoaded', function() {
+    const actions = document.querySelectorAll('[id^="actions-"]');
+    actions.forEach(function(actionsEl) {
+      const mediaId = actionsEl.id.replace('actions-','');
+      const transEl = document.getElementById('transcripcionBadge-' + mediaId);
+      if (transEl) startPolling(mediaId, transEl, actionsEl);
+    });
+  });
 </script>
 @endsection

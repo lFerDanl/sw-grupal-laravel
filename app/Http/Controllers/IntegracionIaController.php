@@ -297,7 +297,7 @@ class IntegracionIaController extends Controller
 
     public function status($id)
     {
-        $nestBase = env('NEST_API_URL', 'http://localhost:3001');
+        $nestBase = env('NEST_API_URL', 'http://localhost:3001/api');
 
         $mediaResp = Http::get(rtrim($nestBase, '/') . '/media/' . $id);
         if (!$mediaResp->successful()) {
