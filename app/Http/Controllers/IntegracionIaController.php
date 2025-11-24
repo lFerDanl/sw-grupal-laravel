@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class IntegracionIaController extends Controller
 {
@@ -257,6 +258,9 @@ class IntegracionIaController extends Controller
 
         $file = $request->file('file');
         $nestBase = env('NEST_API_URL', 'http://localhost:3001/api');
+
+        $url = rtrim($nestBase, '/') . '/media/upload';
+        Log::info('POST a Nest:', ['url' => $url]);
 
         $response = Http::attach(
                 'file',

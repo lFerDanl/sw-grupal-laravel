@@ -84,9 +84,9 @@
           </div>
           <h4 class="text-muted mb-3">Aún no tienes contenidos</h4>
           <p class="text-muted mb-4">¡Sube tu primera clase y comienza a generar apuntes automáticamente!</p>
-          <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalUpload">
+          <a class="btn btn-primary btn-lg" href="{{ route('client.apuntes.ia.media') }}">
             <i class="bi bi-plus-circle me-2"></i>Subir primera clase
-          </button>
+          </a>
         </div>
       </div>
     @endforelse
