@@ -66,4 +66,14 @@
   </div>
 </div>
 
+<script>
+  const form = document.getElementById('uploadForm');
+  const btn = document.getElementById('btnSubmit');
+  if(form && btn){
+    form.addEventListener('submit', function(){
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Subiendo...';
+    });
+  }
+</script>
 @endsection

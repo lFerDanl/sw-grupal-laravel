@@ -244,7 +244,6 @@ class IntegracionIaController extends Controller
 
     public function upload(Request $request)
     {
-        \Log::info('Upload: inicio controlador');
         $request->validate([
             'file' => 'required|file|max:512000',
             'titulo' => 'required|string|max:200',
@@ -254,8 +253,7 @@ class IntegracionIaController extends Controller
 
         $userId = Auth::user()->id ?? null;
         if (!$userId) {
-            \Log::warning('Upload: usuario no autenticado');
-            return redirect()->route('singin')->with('error', 'Debes iniciar sesión para subir media');
+            return back()->withErrors(['auth' => 'Usuario no autenticado']);
         }
 
         $file = $request->file('file');
@@ -277,7 +275,6 @@ class IntegracionIaController extends Controller
             ]);
 
         if (!$response->successful()) {
-            \Log::error('Upload: error respuesta Nest', ['status' => $response->status(), 'body' => $response->body()]);
             return back()->withErrors(['upload' => 'Error subiendo media: ' . $response->body()])->withInput();
         }
 
