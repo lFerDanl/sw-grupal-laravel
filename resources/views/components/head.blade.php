@@ -124,14 +124,19 @@
 
     <!-- Page loading scripts -->
     <script>
-      (function () {
-        window.onload = function () {
-          const preloader = document.querySelector('.page-loading');
+      (function(){
+        function removePreloader(){
+          var preloader = document.querySelector('.page-loading');
+          if(!preloader) return;
           preloader.classList.remove('active');
-          setTimeout(function () {
-            preloader.remove();
-          }, 1000);
-        };
+          setTimeout(function(){ try{ preloader.remove(); }catch(e){} }, 300);
+        }
+        if(document.readyState === 'complete' || document.readyState === 'interactive'){
+          removePreloader();
+        } else {
+          document.addEventListener('DOMContentLoaded', removePreloader);
+          window.addEventListener('load', removePreloader);
+        }
       })();
     </script>
 
