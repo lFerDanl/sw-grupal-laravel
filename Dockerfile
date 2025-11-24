@@ -59,6 +59,6 @@ RUN npm ci && npm run build
 # Expose Render default port
 EXPOSE 10000
 
-# Start PHP built-in server with public as document root
-CMD ["php", "-S", "0.0.0.0:10000", "-t", "public", "public/index.php"]
+# Start PHP built-in server with router to serve static files
+CMD ["php", "-S", "0.0.0.0:10000", "-t", "public", "server.php"]
 
